@@ -1,0 +1,35 @@
+﻿@page "/counter"
+@using Microsoft.Agents.AI
+@using Microsoft.Agents.AI.Workflows
+@rendermode InteractiveServer
+@inject AIAgent aiAgent
+<PageTitle>Counter</PageTitle>
+
+<h1>Hotel - booking</h1>
+
+<label>Input</label>
+<br />
+<input style="width: 500px;" @bind="UserInput" type="text" />
+<br />
+<label>Resposta</label>
+<br />
+<textarea style="width: 600px; height: 500px;" @bind="Result"></textarea>
+<br />
+
+<button class="btn btn-primary" @onclick="IncrementCount">Enviar</button>
+@* <button class="btn btn-primary" @onclick="ClearHistory">Limpar chat</button> *@
+
+@code {
+
+    public string UserInput { get; set; }
+    public string Result { get; set; }
+
+    private async Task IncrementCount()
+    {
+        var workflow = await aiAgent.RunAsync(UserInput);
+
+        Result = workflow.Text;
+        
+    }
+
+}
