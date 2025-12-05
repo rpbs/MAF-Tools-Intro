@@ -26,9 +26,13 @@
 
     private async Task IncrementCount()
     {
-        var workflow = await aiAgent.RunAsync(UserInput);
+        var agentResponse = await aiAgent.RunAsync(UserInput);
 
-        Result = workflow.Text;
+        var tokensMessage = $"Tokens de input: {agentResponse.Usage.InputTokenCount}\n" +
+                            $"Tokens de output: {agentResponse.Usage.OutputTokenCount}\n" +
+                            $"Custo total: {agentResponse.Usage.TotalTokenCount}";
+            
+        Result = agentResponse.Text + "\n\n" + tokensMessage;
         
     }
 
